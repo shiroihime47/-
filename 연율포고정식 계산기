@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>유희왕 오피셜 카드게임 계산기</title>
+    <script>
+        function calculate() {
+            // 입력값을 가져오기
+            const fusionMinLevel = parseInt(document.getElementById('fusionMinLevel').value);
+            const fusionMaxLevel = parseInt(document.getElementById('fusionMaxLevel').value);
+            const xyzMinRank = parseInt(document.getElementById('xyzMinRank').value);
+            const xyzMaxRank = parseInt(document.getElementById('xyzMaxRank').value);
+            const cardCount = parseInt(document.getElementById('cardCount').value);
+            const opponentMonsterRank = parseInt(document.getElementById('opponentMonsterRank').value);
+
+            // '제외할 엑시즈 몬스터의 랭크' 계산
+            let excludedXyzRank = cardCount - opponentMonsterRank;
+
+            // '제외할 융합 몬스터의 레벨' 계산
+            let excludedFusionLevel = opponentMonsterRank - excludedXyzRank;
+
+            // 출력값을 초기화
+            let fusionOutput = '불가능';
+            let xyzOutput = '불가능';
+
+            // '제외할 엑시즈 몬스터의 랭크'가 유효한지 체크
+            if (excludedXyzRank >= xyzMinRank && excludedXyzRank <= xyzMaxRank) {
+                xyzOutput = excludedXyzRank;
+            }
+
+            // '제외할 융합 몬스터의 레벨'이 유효한지 체크
+            if (excludedFusionLevel >= fusionMinLevel && excludedFusionLevel <= fusionMaxLevel) {
+                fusionOutput = excludedFusionLevel;
+            }
+
+            // 결과 출력
+            document.getElementById('resultFusion').textContent = `제외할 융합 몬스터의 레벨: ${fusionOutput}`;
+            document.getElementById('resultXyz').textContent = `제외할 엑시즈 몬스터의 랭크: ${xyzOutput}`;
+        }
+    </script>
+</head>
+<body>
+    <h1>유희왕 오피셜 카드게임 계산기</h1>
+
+    <label for="fusionMinLevel">융합 몬스터 최소 레벨:</label>
+    <input type="number" id="fusionMinLevel" required><br><br>
+
+    <label for="fusionMaxLevel">융합 몬스터 최대 레벨:</label>
+    <input type="number" id="fusionMaxLevel" required><br><br>
+
+    <label for="xyzMinRank">엑시즈 몬스터 최소 랭크:</label>
+    <input type="number" id="xyzMinRank" required><br><br>
+
+    <label for="xyzMaxRank">엑시즈 몬스터 최대 랭크:</label>
+    <input type="number" id="xyzMaxRank" required><br><br>
+
+    <label for="cardCount">서로의 패/필드의 카드 매수:</label>
+    <input type="number" id="cardCount" required><br><br>
+
+    <label for="opponentMonsterRank">상대 필드 몬스터의 레벨/랭크:</label>
+    <input type="number" id="opponentMonsterRank" required><br><br>
+
+    <button onclick="calculate()">계산하기</button>
+
+    <h2>결과:</h2>
+    <p id="resultFusion">제외할 융합 몬스터의 레벨: 불가능</p>
+    <p id="resultXyz">제외할 엑시즈 몬스터의 랭크: 불가능</p>
+</body>
+</html>
